@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import api from "../api/axios"
+import api from "../api/axios";
+import { login } from "../api/auth";
 const schema = yup.object({
   username: yup.string().required("نام کاربری"),
   password: yup.string().required("رمز عبور"),
@@ -13,8 +14,9 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const result = await login(data);
+    localStorage.setItem("token", result.token  );
   };
   return (
     <div>
