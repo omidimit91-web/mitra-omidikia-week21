@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../api/auth";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { login } from "../src/api/auth";
 
 const schema = yup.object({
   username: yup.string().required("نام کاربری"),
   password: yup.string().required("رمز عبور"),
 });
 function Login() {
-  const navigate = useNavigate()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -18,8 +18,8 @@ function Login() {
   } = useForm({ resolver: yupResolver(schema) });
   const onSubmit = async (data) => {
     const result = await login(data);
-    localStorage.setItem("token", result.token  );
-    navigate("/products")
+    localStorage.setItem("token", result.token);
+    router.push("/products");
   };
   return (
     <div>
@@ -30,7 +30,7 @@ function Login() {
         <input type="password" placeholder="رمز" {...register("password")} />
         {errors.password && <p>{errors.password.message}</p>}
         <button type="submit">ورود</button>
-        <Link to="/register">ایجاد حساب کاربری</Link>
+        <Link href="/register">ایجاد حساب کاربری</Link>
       </form>
     </div>
   );

@@ -1,8 +1,7 @@
-import { getProducts, deleteProduct } from "../api/products";
+import { getProducts, deleteProduct } from "../src/api/products";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import ProductForm from "../pages/ProductForm";
-import "../style/products.css";
+import ProductForm from "./ProductForm";
 
 function Products() {
   const [page, setPage] = useState(1);
